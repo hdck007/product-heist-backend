@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const amazonItemsRouter = require('./src/routes/amazonItems.router');
 const flipkartItemsRouter = require('./src/routes/flipkartItems.router');
+const authRouter = require('./src/routes/auth.router');
 const morgan = require('morgan');
 
 app.use(morgan('tiny'));
@@ -12,6 +13,7 @@ app.get('/', (req, res) => {
 	res.status(200).json({ message: 'ok' });
 });
 
+app.use('/user', authRouter);
 app.use('/amazon', amazonItemsRouter);
 app.use('/flipkart', flipkartItemsRouter);
 
