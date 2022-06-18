@@ -7,7 +7,10 @@
     "start": "nodemon index.js",
     "pre-commit": "lint-staged",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "_lint": "eslint --config ./.eslintrc.js --ext js --ext jsx --ext tsx --ext ts",
+    "lint": "npm run _lint -- ./src/",
+    "lint:fix": "npm run _lint -- --fix ./src/"
   },
   "author": "",
   "license": "ISC",
@@ -37,5 +40,10 @@
     "lint-staged": "^13.0.2",
     "prettier": "^2.7.1",
     "prisma": "^3.15.1"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "eslint"
+    ]
   }
 }

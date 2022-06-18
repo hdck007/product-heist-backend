@@ -7,7 +7,6 @@ async function getItems(req, res, next) {
     );
     res.status(200).json(results);
   } catch (err) {
-    console.error('Error while getting programming languages', err.message);
     next(err);
   }
 }

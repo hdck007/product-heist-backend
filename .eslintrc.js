@@ -11,5 +11,7 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   rules: {
+    'no-tabs': 0,
+    'consistent-return': 0,
   },
 };
