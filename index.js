@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const amazonItemsRouter = require('./src/routes/amazonItems');
 const flipkartItemsRouter = require('./src/routes/flipkartItems.router');
 const authRouter = require('./src/routes/auth.router');
+const refreshRouter = require('./src/routes/refresh.router');
+const verifyJWT = require('./src/middlewares/verifyJwt');
 
 app.use(morgan('tiny'));
 app.use(express.json());
@@ -15,13 +17,12 @@ app.get('/', (req, res) => {
 });
 
 app.use('/user', authRouter);
-app.use('/amazon', amazonItemsRouter);
-app.use('/flipkart', flipkartItemsRouter);
+app.use('/refersh', verifyJWT, refreshRouter);
+app.use('/amazon', verifyJWT, amazonItemsRouter);
+app.use('/flipkart', verifyJWT, flipkartItemsRouter);
 
-app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  console.error(err.message, err.stack);
-  res.status(statusCode).json({ message: err.message });
+app.all('*', (req, res) => {
+  res.status(404).send('404 Not Found');
 });
 
 app.listen(port, () => {

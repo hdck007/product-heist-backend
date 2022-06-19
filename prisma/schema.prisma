@@ -19,4 +19,25 @@ model User{
   password String
   firstName String
   lastName String
+  refresh String?
+  products UserWatchedProducts[]
+}
+
+model Product{
+  id Int @id @default(autoincrement())
+  title String
+  url String
+  imageUrl String
+  price String
+  ratings Int
+  customers UserWatchedProducts[]
+}
+
+model UserWatchedProducts {
+  customer   User    @relation(fields: [customerId], references: [id])
+  customerId Int // relation scalar field (used in the `@relation` attribute above)
+  product    Product @relation(fields: [productId], references: [id])
+  productId  Int // relation scalar field (used in the `@relation` attribute above)
+
+  @@id([customerId, productId])
 }
