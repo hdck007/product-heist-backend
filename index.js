@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
@@ -9,6 +10,8 @@ const authRouter = require('./src/routes/auth.router');
 const refreshRouter = require('./src/routes/refresh.router');
 const productsRouter = require('./src/routes/product.router');
 const verifyJWT = require('./src/middlewares/verifyJwt');
+
+app.use(cors());
 
 app.use(morgan('tiny'));
 app.use(express.json());
