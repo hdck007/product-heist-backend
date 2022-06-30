@@ -17,7 +17,7 @@ app.use(morgan('tiny'));
 app.use(express.json());
 
 app.get('/', async (req, res) => {
-  res.json({ msg: 'done' });
+  res.status(200).json({ msg: 'Hello' });
 });
 
 app.use('/user', authRouter);

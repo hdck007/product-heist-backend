@@ -24,7 +24,7 @@ module.exports = () => {
         }
         // update the product
         if (price) {
-          if (Number(price) < Number(products[i].price)) {
+          if (price < products[i].price) {
             await prisma.product.update({
               where: {
                 id: products[i].id,

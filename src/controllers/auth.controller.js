@@ -71,7 +71,7 @@ const handleRegister = async (req, res) => {
     const accessToken = jwt.sign(
       { username, id: userId },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '30s' },
+      { expiresIn: '1d' },
     );
     const refreshToken = jwt.sign(
       { username, id: userId },
