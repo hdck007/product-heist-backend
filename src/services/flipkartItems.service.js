@@ -12,13 +12,20 @@ async function scrapeData(url) {
     const title = section('._4rR01T').text();
     const price = section('._30jeq3').text();
     const ratings = section('._3LWZlK').text();
-    const image = section('._396cs4').attr('src');
-    if (title.trim() && price.trim()) {
+    const productUrl = section('._1fQZEK').attr('href');
+    const imageUrl = section('._396cs4').attr('src');
+    if (title.trim()
+    && price.trim()
+    && ratings.trim()
+    && imageUrl
+    && productUrl) {
       items.push({
         title,
         price,
         ratings,
-        image,
+        imageUrl,
+        url: `https://www.flipkart.com${productUrl}`,
+        brand: 'flipkart',
       });
     }
   });

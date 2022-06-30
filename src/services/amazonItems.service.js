@@ -17,13 +17,20 @@ async function scrapeData(url) {
     const title = section('.a-size-medium').text();
     const price = section('.a-price-whole').text();
     const ratings = section('.a-icon-alt').text();
-    const image = section('.s-image').attr('src');
-    if (title.trim() && price.trim() && ratings.trim() && image) {
+    const productUrl = section('.a-link-normal.s-no-outline').attr('href');
+    const imageUrl = section('.s-image').attr('src');
+    if (title.trim()
+    && price.trim()
+    && ratings.trim()
+    && imageUrl
+    && productUrl) {
       items.push({
         title,
         price,
         ratings,
-        image,
+        imageUrl,
+        url: `https://www.amazon.in${productUrl}`,
+        brand: 'amazon',
       });
     }
   });
@@ -41,7 +48,6 @@ async function getAmazonItemPrice(url) {
     const body = await response.text();
     const $ = cheerio.load(body);
     const price = $('.a-price-whole').text().split('.')[0];
-    console.log(price);
     return price;
   } catch (error) {
     console.log(error);
