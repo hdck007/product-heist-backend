@@ -33,9 +33,11 @@ const addItems = async (req, res) => {
       ratings,
       brand,
     } = req.body;
-    const product = await prisma.product.findUnique({
+    const product = await prisma.product.findFirst({
       where: {
         title,
+        brand,
+        imageUrl,
       },
     });
 
@@ -104,8 +106,30 @@ const removeItems = async (req, res) => {
   }
 };
 
+const shouldNotify = async (req, res) => {
+  try {
+    const data = await prisma.product.findMany({
+      where: {
+        customers: {
+          some: {
+            customer: {
+              id: req.user,
+            },
+          },
+        },
+      },
+    });
+    const notify = data.some((item) => item.downInCost);
+    res.status(200).json({ notify });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Internal server error' });
+  }
+};
+
 module.exports = {
   getItems,
   addItems,
   removeItems,
+  shouldNotify,
 };
