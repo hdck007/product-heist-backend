@@ -10,7 +10,7 @@ const getItems = async (req, res) => {
         customers: {
           some: {
             customer: {
-              username: req.user,
+              id: req.user,
             },
           },
         },
@@ -31,16 +31,11 @@ const addItems = async (req, res) => {
       title,
       price,
       ratings,
+      brand,
     } = req.body;
     const product = await prisma.product.findUnique({
       where: {
         title,
-      },
-    });
-
-    const user = await prisma.user.findUnique({
-      where: {
-        username: req.user,
       },
     });
 
@@ -54,7 +49,7 @@ const addItems = async (req, res) => {
             create: {
               customer: {
                 connect: {
-                  id: user.id,
+                  id: req.user,
                 },
               },
             },
@@ -69,11 +64,12 @@ const addItems = async (req, res) => {
           title,
           price,
           ratings,
+          brand,
           customers: {
             create: {
               customer: {
                 connect: {
-                  id: user.id,
+                  id: req.user,
                 },
               },
             },
@@ -93,17 +89,11 @@ const removeItems = async (req, res) => {
     const {
       id,
     } = req.body;
-    const user = await prisma.user.findUnique({
-      where: {
-        username: req.user,
-      },
-    });
 
-    if (!user) return res.status(500).json({ msg: 'Internal server error' });
     await prisma.userWatchedProducts.delete({
       where: {
         customerId_productId: {
-          customerId: user.id,
+          customerId: req.user,
           productId: id,
         },
       },

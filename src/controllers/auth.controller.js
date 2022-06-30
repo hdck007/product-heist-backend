@@ -18,14 +18,20 @@ const handleLogin = async (req, res) => {
     // evaluate password
     const match = await bcrypt.compare(password, user.password);
     if (match) {
-    // create JWTs
+      // create JWTs
       const accessToken = jwt.sign(
-        { username: user.username },
+        {
+          username: user.username,
+          id: user.id,
+        },
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: '1d' },
       );
       const refreshToken = jwt.sign(
-        { username: user.username },
+        {
+          username: user.username,
+          id: user.id,
+        },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '1d' },
       );
@@ -61,18 +67,20 @@ const handleRegister = async (req, res) => {
     if (user) {
       res.status(400).json({ message: 'Username already exists' });
     }
+    const userId = `${username}-id`;
     const accessToken = jwt.sign(
-      { username },
+      { username, id: userId },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '30s' },
     );
     const refreshToken = jwt.sign(
-      { username },
+      { username, id: userId },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: '1d' },
     );
     await prisma.user.create({
       data: {
+        id: userId,
         username,
         password: hashedPassword,
         firstName,
@@ -81,7 +89,8 @@ const handleRegister = async (req, res) => {
       },
     });
     res.status(201).json({ accessToken, refreshToken });
-  } catch {
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'error creating user' });
   }
 };

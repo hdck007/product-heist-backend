@@ -10,7 +10,7 @@ const verifyJWT = (req, res, next) => {
     process.env.ACCESS_TOKEN_SECRET,
     (err, decoded) => {
       if (err) return res.status(403).json({ msg: 'Invalid access token' });
-      req.user = decoded.username;
+      req.user = decoded.id;
       next();
     },
   );

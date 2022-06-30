@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User{
-  id  Int @id @default(autoincrement())
+  id  String @id 
   username String @unique
   password String
   firstName String
@@ -25,17 +25,19 @@ model User{
 
 model Product{
   id Int @id @default(autoincrement())
+  brand String
   title String @unique
-  url String
-  imageUrl String
+  url String @db.LongText
+  imageUrl String @db.LongText
   price String
   ratings Int
+  downInCost Boolean @default(false)
   customers UserWatchedProducts[]
 }
 
 model UserWatchedProducts {
   customer   User    @relation(fields: [customerId], references: [id])
-  customerId Int // relation scalar field (used in the `@relation` attribute above)
+  customerId String // relation scalar field (used in the `@relation` attribute above)
   product    Product @relation(fields: [productId], references: [id])
   productId  Int // relation scalar field (used in the `@relation` attribute above)
 

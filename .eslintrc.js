@@ -13,5 +13,6 @@ module.exports = {
   rules: {
     'no-tabs': 0,
     'consistent-return': 0,
+    'no-await-in-loop': 0,
   },
 };

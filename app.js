@@ -16,8 +16,8 @@ app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'ok' });
+app.get('/', async (req, res) => {
+  res.json({ msg: 'done' });
 });
 
 app.use('/user', authRouter);
