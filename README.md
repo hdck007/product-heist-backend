@@ -47,8 +47,8 @@ To run this project, you will need to add the following environment variables to
 
 ## Tech Stack
 
-- **Node**
-- **Express**
+- **Nodejs**
+- **Expressjs**
 - **Prisma**
 - **Planescaledb**
 - **jsonwebtoken**
@@ -56,6 +56,7 @@ To run this project, you will need to add the following environment variables to
 
 ### Theses improved my devlopment experience
 - **husky**
-- **eslint** (Airbnb config)
-- **commitlint**
+- **eslint ✨** (Airbnb config)
+- **commitlint 💯**
+- **prisma-studio 💖**
 
